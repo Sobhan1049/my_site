@@ -1,0 +1,24 @@
+
+<ul class="flex items-center text-sm font-medium h-full">
+
+    {% if user.is_authenticated %}
+        <li class="nav-link mr-5"><a href="{% url "users:logout" %}">خروج</a></li>
+        <li class="nav_link mr-1 ">
+            <a href="{% url "users:switch-hosting" %}">
+                {% if request.session.is_hosting %}
+                    خروج میزبان
+                {% else %}  
+                    میزبانی
+                {% endif %}
+            </a>    
+        </li>
+        {% if request.session.is_hosting %}
+            <li class="nav-link mr-10"><a href="{% url "rooms:create" %}">ایجاد خانه</a></li>
+        {% endif %}
+        <li class="nav_link mr-10"><a href="{% url 'lists:see-favs' %}">علاقه مندی ({{user.list.rooms.count}})</a></li>
+        <li class="nav-link mr-5"><a href="{{ user.get_absolute_url }}">پروفایل</a></li>
+    {% else  %}
+        <li class="nav-link border-b-2 border-white hover:border-gray-600 h-full flex items-center"><a class="py-10 px-5" href="{% url "users:login" %}">ورود</a></li>
+        <li class="nav-link border-b-2 border-white hover:border-gray-600 h-full flex items-center"><a class="py-10 px-5" href="{% url "users:signup" %}">ثبت نام</a></li>
+    {% endif %}
+</ul>
